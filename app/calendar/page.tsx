@@ -105,8 +105,7 @@ const CalendarPage = () => {
                     <h3 className="font-bold text-gray-800">{event.title}</h3>
                     <p className="text-sm text-gray-600 mt-1">{event.date}</p>
                   </div>
-                  <span className={${ isUpcoming ? 'inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold' : 'inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold'}
-                  }>
+                  <span className={`${ isUpcoming ? 'inline-block bg-yellow-100 text-yellow-800' : 'inline-block bg-green-100 text-green-800'}`}                  }>
                     {new Date(event.date) > new Date() ? '✓ Upcoming' : '✓ Done'}
                   </span>
                 </div>
