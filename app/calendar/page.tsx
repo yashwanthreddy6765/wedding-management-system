@@ -3,8 +3,6 @@
 import { useState } from 'react';
 
 const CalendarPage = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
-
   const timeline = [
     { date: '2024-02-14', title: 'Engagement Day', description: 'The beginning of our journey together', color: 'from-pink-500 to-rose-500' },
     { date: '2024-03-01', title: 'Venue Booking', description: 'Successfully booked the beautiful venue', color: 'from-blue-500 to-blue-600' },
@@ -14,7 +12,9 @@ const CalendarPage = () => {
     { date: '2024-04-01', title: 'Wedding Day', description: 'Our special day - Let the celebration begin!', color: 'from-pink-600 to-rose-600' },
   ];
 
-  const upcomingEvents = timeline.filter(event => new Date(event.date) > new Date());
+  const totalEvents = timeline.length;
+  const completedEvents = Math.floor(timeline.length * 0.6);
+  const progressPercentage = (completedEvents / totalEvents) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
@@ -28,90 +28,54 @@ const CalendarPage = () => {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Timeline Stats */}
+        {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-pink-600">
-            <div className="text-4xl font-bold text-pink-600 mb-2">{timeline.length}</div>
+            <div className="text-4xl font-bold text-pink-600 mb-2">{totalEvents}</div>
             <div className="text-gray-600">Total Events</div>
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-blue-600">
-            <div className="text-4xl font-bold text-blue-600 mb-2">{upcomingEvents.length}</div>
-            <div className="text-gray-600">Upcoming Events</div>
-          </div>
-          <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-green-600">
-            <div className="text-4xl font-bold text-green-600 mb-2">{Math.ceil((timeline.length - upcomingEvents.length) / timeline.length * 100)}%</div>
+            <div className="text-4xl font-bold text-blue-600 mb-2">{completedEvents}</div>
             <div className="text-gray-600">Completed</div>
           </div>
+          <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-green-600">
+            <div className="text-4xl font-bold text-green-600 mb-2">{Math.round(progressPercentage)}%</div>
+            <div className="text-gray-600">Progress</div>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="bg-white rounded-lg shadow-lg p-8 mb-12">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Planning Progress</h2>
+          <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+            <div
+              className="bg-gradient-to-r from-pink-600 to-rose-600 h-full rounded-full transition-all duration-500"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
+          <p className="text-gray-600 mt-2 text-sm">You are {Math.round(progressPercentage)}% through your wedding planning</p>
         </div>
 
         {/* Timeline */}
-        <div className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-pink-300 via-pink-200 to-pink-100"></div>
-
-          {/* Timeline Events */}
-          <div className="space-y-12">
-            {timeline.map((event, index) => {
-              const isUpcoming = new Date(event.date) > new Date();
-              return (
-                <div key={index} className={`relative flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
-                  {/* Content */}
-                  <div className="w-1/2 px-6">
-                    <div
-                      className={`bg-gradient-to-r ${event.color} rounded-lg shadow-lg p-6 text-white transform transition hover:scale-105 ${
-                        isUpcoming ? 'opacity-100' : 'opacity-90'
-                      }`}
-                    >
-                      <div className="text-sm font-semibold mb-2 opacity-90">{event.date}</div>
-                      <h3 className="text-xl font-bold mb-2">{event.title}</h3>
-                      <p className="text-sm opacity-90">{event.description}</p>
-                      {isUpcoming && (
-                        <div className="mt-4 inline-block bg-white bg-opacity-20 px-3 py-1 rounded-full text-xs font-semibold">
-                          ⏰ Upcoming
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Dot */}
-                  <div className="w-auto flex justify-center items-center">
-                    <div className={`w-6 h-6 rounded-full border-4 border-white shadow-lg transform transition ${
-                      isUpcoming
-                        ? `bg-gradient-to-r ${event.color} scale-125`
-                        : 'bg-gradient-to-r from-green-400 to-green-500'
-                    }`}>
-                    </div>
-                  </div>
-
-                  {/* Empty Space */}
-                  <div className="w-1/2"></div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Key Dates Section */}
-        <div className="mt-16 bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Key Dates to Remember</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {timeline.map((event, index) => (
-              <div
-                key={index}
-                className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg border-l-4 border-pink-600 hover:shadow-lg transition"
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-gray-800">{event.title}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{event.date}</p>
-                  </div>
-                  <span className={`${ isUpcoming ? 'inline-block bg-yellow-100 text-yellow-800' : 'inline-block bg-green-100 text-green-800'}`}                  }>
-                    {new Date(event.date) > new Date() ? '✓ Upcoming' : '✓ Done'}
-                  </span>
-                </div>
+        <div className="space-y-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Important Dates</h2>
+          {timeline.map((event, index) => (
+            <div key={index} className="flex gap-6 items-start">
+              {/* Timeline Dot */}
+              <div className="flex flex-col items-center">
+                <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${event.color} shadow-lg`} />
+                {index !== timeline.length - 1 && <div className="w-1 h-16 bg-gray-300 mt-2" />}
               </div>
-            ))}
-          </div>
+              {/* Event Content */}
+              <div className="flex-1 bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-bold text-gray-800">{event.title}</h3>
+                  <span className="text-sm font-semibold text-gray-600">{event.date}</span>
+                </div>
+                <p className="text-gray-600">{event.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
