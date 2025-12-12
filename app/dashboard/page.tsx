@@ -16,8 +16,7 @@ const Dashboard = () => {
   const totalTasks = tasks.length;
   const progressPercentage = (completedTasks / totalTasks) * 100;
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  const toggleTask = (id: number) => {    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
 
   const upcomingEvents = [
