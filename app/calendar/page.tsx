@@ -1,85 +1,65 @@
 'use client';
 
-import { useState } from 'react';
-
-const CalendarPage = () => {
-  const timeline = [
-    { date: '2024-02-14', title: 'Engagement Day', description: 'The beginning of our journey together', color: 'from-pink-500 to-rose-500' },
-    { date: '2024-03-01', title: 'Venue Booking', description: 'Successfully booked the beautiful venue', color: 'from-blue-500 to-blue-600' },
-    { date: '2024-03-15', title: 'Send Invitations', description: 'Invitations sent to all guests', color: 'from-purple-500 to-purple-600' },
-    { date: '2024-03-20', title: 'Menu Tasting', description: 'Finalized catering menu with the team', color: 'from-orange-500 to-orange-600' },
-    { date: '2024-03-25', title: 'Final Fittings', description: 'Wedding dress and suit final adjustments', color: 'from-green-500 to-green-600' },
-    { date: '2024-04-01', title: 'Wedding Day', description: 'Our special day - Let the celebration begin!', color: 'from-pink-600 to-rose-600' },
-  ];
-
-  const totalEvents = timeline.length;
-  const completedEvents = Math.floor(timeline.length * 0.6);
-  const progressPercentage = (completedEvents / totalEvents) * 100;
-
+export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
-      {/* Hero Section */}
       <div className="bg-gradient-to-r from-pink-600 to-rose-600 text-white py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-2">Wedding Timeline</h1>
           <p className="text-pink-100 text-lg">All important dates and milestones</p>
         </div>
       </div>
-
-      {/* Main Content */}
+      
       <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-pink-600">
-            <div className="text-4xl font-bold text-pink-600 mb-2">{totalEvents}</div>
+            <div className="text-4xl font-bold text-pink-600 mb-2">6</div>
             <div className="text-gray-600">Total Events</div>
           </div>
+          
           <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-blue-600">
-            <div className="text-4xl font-bold text-blue-600 mb-2">{completedEvents}</div>
+            <div className="text-4xl font-bold text-blue-600 mb-2">4</div>
             <div className="text-gray-600">Completed</div>
           </div>
-          <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-green-600">
-            <div className="text-4xl font-bold text-green-600 mb-2">{Math.round(progressPercentage)}%</div>
+          
+          <div className="bg-white rounded-lg shadow-lg p-6 text-center border-t-4 border-purple-600">
+            <div className="text-4xl font-bold text-purple-600 mb-2">67%</div>
             <div className="text-gray-600">Progress</div>
           </div>
         </div>
-
-        {/* Progress Bar */}
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Planning Progress</h2>
-          <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-            <div
-              className="bg-gradient-to-r from-pink-600 to-rose-600 h-full rounded-full transition-all duration-500"
-              style={{ width: `${progressPercentage}%` }}
-            />
+        
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-pink-500">
+            <h3 className="font-bold text-pink-600">Engagement Day - Feb 14, 2024</h3>
+            <p className="text-gray-600 text-sm">The beginning of our journey together</p>
           </div>
-          <p className="text-gray-600 mt-2 text-sm">You are {Math.round(progressPercentage)}% through your wedding planning</p>
-        </div>
-
-        {/* Timeline */}
-        <div className="space-y-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Important Dates</h2>
-          {timeline.map((event, index) => (
-            <div key={index} className="flex gap-6 items-start">
-              {/* Timeline Dot */}
-              <div className="flex flex-col items-center">
-                <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${event.color} shadow-lg`} />
-                {index !== timeline.length - 1 && <div className="w-1 h-16 bg-gray-300 mt-2" />}
-              </div>
-              {/* Event Content */}
-              <div className="flex-1 bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-gray-800">{event.title}</h3>
-                  <span className="text-sm font-semibold text-gray-600">{event.date}</span>
-                </div>
-                <p className="text-gray-600">{event.description}</p>
-              </div>
-            </div>
-          ))}
+          
+          <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-blue-500">
+            <h3 className="font-bold text-blue-600">Venue Booking - Mar 01, 2024</h3>
+            <p className="text-gray-600 text-sm">Successfully booked the beautiful venue</p>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-purple-500">
+            <h3 className="font-bold text-purple-600">Send Invitations - Mar 15, 2024</h3>
+            <p className="text-gray-600 text-sm">Invitations sent to all guests</p>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-orange-500">
+            <h3 className="font-bold text-orange-600">Menu Tasting - Mar 20, 2024</h3>
+            <p className="text-gray-600 text-sm">Finalized catering menu with the team</p>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-green-500">
+            <h3 className="font-bold text-green-600">Final Fittings - Mar 25, 2024</h3>
+            <p className="text-gray-600 text-sm">Wedding dress and suit final adjustments</p>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-pink-600">
+            <h3 className="font-bold text-pink-700">Wedding Day - Apr 01, 2024</h3>
+            <p className="text-gray-600 text-sm">Our special day - Let the celebration begin!</p>
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default CalendarPage;
+}
