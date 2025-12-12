@@ -1,10 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import Link from 'next/link';
 
-const Dashboard = () => {
-  const [tasks, setTasks] = useState([
+interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+  category: string;
+}
+
+interface UpcomingEvent {
+  date: string;
+  event: string;
+  daysLeft: number;
+}
+
+const Dashboard: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: 'Book Venue', completed: true, category: 'Venue' },
     { id: 2, title: 'Send Invitations', completed: false, category: 'Invitations' },
     { id: 3, title: 'Plan Menu', completed: false, category: 'Catering' },
@@ -16,17 +29,18 @@ const Dashboard = () => {
   const totalTasks = tasks.length;
   const progressPercentage = (completedTasks / totalTasks) * 100;
 
-  const toggleTask = (id: number) => {    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  const toggleTask = (id: number): void => {
+    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
 
-  const upcomingEvents = [
+  const upcomingEvents: UpcomingEvent[] = [
     { date: '2024-03-15', event: 'Final Guest Confirmation', daysLeft: 12 },
     { date: '2024-03-20', event: 'Menu Tasting', daysLeft: 7 },
     { date: '2024-04-01', event: 'Wedding Day', daysLeft: 19 },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 pt-20">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-pink-600 to-rose-600 text-white py-16 px-6">
         <div className="max-w-6xl mx-auto">
@@ -85,6 +99,7 @@ const Dashboard = () => {
                     checked={task.completed}
                     onChange={() => toggleTask(task.id)}
                     className="w-5 h-5 text-pink-600 cursor-pointer"
+                    aria-label={`Toggle ${task.title}`}
                   />
                   <span
                     className={`ml-3 flex-1 ${
